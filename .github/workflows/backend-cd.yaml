@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'starter/backend/**'
+      - 'starter/frontend/**'
   workflow_dispatch:
 
 env:

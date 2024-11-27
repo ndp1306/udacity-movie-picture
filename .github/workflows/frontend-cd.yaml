@@ -60,7 +60,7 @@ jobs:
 
   build-and-push:
     name: Build and Push to ECR
-    needs: [test]
+    needs: [lint, test]
     runs-on: ubuntu-latest
     
     steps:
@@ -82,7 +82,9 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./starter/frontend
+          docker build \
+            --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./starter/frontend
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
   deploy:

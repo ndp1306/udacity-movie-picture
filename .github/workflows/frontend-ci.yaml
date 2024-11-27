@@ -64,4 +64,7 @@ jobs:
       
       - name: Build Docker image
         working-directory: ./starter/frontend
-        run: docker build -t frontend:${{ github.sha }} .
+        run: |
+          docker build \
+            --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 \
+            -t frontend:${{ github.sha }} .
